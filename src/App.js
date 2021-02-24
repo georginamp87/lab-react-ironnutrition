@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
+import 'bulma/css/bulma.css'
 import './App.css';
+import FoodList from './components/FoodList.js'
+import TodaysFood from './components/TodaysFood';
 
-function App() {
+
+class App extends Component {  
+
+  state = {
+    todaysFood : []
+  }
+
+  handleAddFood = (food, quantity) => {
+    let myFood = {
+      imageUrl: food.imageUrl,
+      name: food.title,
+      calories: food.calories
+    }
+
+    this.setState({
+      todaysFood: [...this.state.todaysFood, myFood]
+    })
+  }
+
+  render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>IronNutrition</h1>
+        <div class="columns">
+          <div class="column">
+            <FoodList onFoodAdd={this.handleAddFood}/>
+          </div>
+          <div class="column">
+            <TodaysFood items={this.state.todaysFood} />
+          </div>
+        </div>
     </div>
   );
+ }
 }
 
 export default App;
+
